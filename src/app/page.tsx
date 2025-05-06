@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
+import { FiSearch } from 'react-icons/fi';
 
 interface Product {
   id: number;
@@ -14,6 +15,7 @@ interface Product {
 const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,7 +38,19 @@ const Home = () => {
 
   return (
     <div className="p-4">
+    <div className='flex items-center justify-between'>
       <h1 className="text-2xl font-bold mb-4">Lista de Produtos</h1>
+      <div className="relative mb-4">
+   <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+  <input
+    type="text"
+    placeholder="Buscar Produtos"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="pl-10 pr-4 py-2 text-black border rounded w-full"
+  />
+</div>
+    </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map((product) => (
           <div key={product.id} className="border p-4 rounded shadow">
